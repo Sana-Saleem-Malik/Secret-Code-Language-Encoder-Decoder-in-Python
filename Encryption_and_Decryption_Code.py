@@ -7,17 +7,22 @@ import string
 message = input("Enter your message: ")
 encode_decode = input("Enter 'e' to encode or 'd' to decode: ")
 
+def generate_random_first_string(length):
+    letter = string.ascii_letters
+    result_str = ''.join(random.choice(letter) for i in range(length))
+    return result_str
+
+def generate_random_last_string(length):
+    letter = string.ascii_letters
+    result_str = ''.join(random.choice(letter) for i in range(length))
+    return result_str
 
 def encrypt(message):
     new_words = []
     for index, i in enumerate(message.split()):
         if (len(i) > 3):
-            random_chars = ''.join(
-                random.choices(string.ascii_letters + string.digits, k=3))
-            first_letter = i[1:]
-            last_letter = i[0]
-            new_word = first_letter + last_letter
-            new_word = random_chars + new_word + random_chars
+            new_word = i[-1] + i[:-1]
+            new_word = generate_random_first_string(3) + new_word + generate_random_last_string(3)
             new_words.append(new_word)
         else:
             new_words.append(i[::-1])
@@ -28,10 +33,8 @@ def dencrypt(message):
     new_dencrypt_words = []
     for index, i in enumerate(message.split()):
         if (len(i) > 3):
-            first_letter_word = i[:-3]
-            first_letter_word = first_letter_word[3:]
-            first_letter = first_letter_word[-1]
-            first_letter_words = first_letter + first_letter_word[0:-1]
+            word = i[3:-3]   
+            first_letter_words =  word[1:] + word[0]
             new_dencrypt_words.append(first_letter_words)
         else:
             new_dencrypt_words.append(i[::-1])
